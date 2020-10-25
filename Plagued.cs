@@ -46,11 +46,11 @@ namespace Oxide.Plugins
 
             Config.Clear();
             Config["plagueRange"] = 20;
-            Config["plagueIncreaseRate"] = 5;
-            Config["plagueDecreaseRate"] = 1;
-            Config["plagueMinAffinity"] = 6000;
-            Config["affinityIncRate"] = 10;
-            Config["affinityDecRate"] = 1;
+            Config["plagueIncreaseRate"] = 50;
+            Config["plagueDecreaseRate"] = 30;
+            Config["plagueMinAffinity"] = 3000;
+            Config["affinityIncRate"] = 100;
+            Config["affinityDecRate"] = 60;
             Config["maxKin"] = 2;
             Config["maxKinChanges"] = 3;
             Config["disableSleeperAffinity"] = false;
