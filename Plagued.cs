@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using Oxide.Core;
 using Oxide.Core.SQLite;
 using UnityEngine;
 
 namespace Oxide.Plugins
 {
-    [Info("Plagued", "Psi|ocybin", "0.3.4", ResourceId = 1991)]
+    [Info("Plagued", "Psi|ocybin", "0.3.5", ResourceId = 1991)]
     [Description("Everyone is infected")]
 
     class Plagued : RustPlugin
@@ -19,14 +18,12 @@ namespace Oxide.Plugins
         static int plagueDecreaseRate = 1;
         static int plagueMinAffinity = 6000;
         static int affinityIncRate = 10;
-        static int affinityDecRate = 1;
+        static int affinityDecRate = 1; 
         static int maxKin = 2;
         static int maxKinChanges = 3;
         static int playerLayer;
         static bool disableSleeperAffinity = false;
 
-        // Get the buffer size from the Vis class using relfection. It should always be 8ko, but it might change in the future
-        static readonly Collider[] colBuffer = (Collider[])typeof(Vis).GetField("colBuffer", (BindingFlags.Static | BindingFlags.NonPublic)).GetValue(null);
 
         Dictionary<ulong, PlayerState> playerStates;
 
@@ -1095,15 +1092,15 @@ namespace Oxide.Plugins
 
             void CheckProximity()
             {
-                var count = Physics.OverlapSphereNonAlloc(player.transform.position, plagueRange, colBuffer, playerLayer);
+                var count = Physics.OverlapSphereNonAlloc(player.transform.position, plagueRange, Vis.colBuffer, playerLayer);
 
                 if (count > 1)
                 {
                     BasePlayer[] playersNear = new BasePlayer[count];
                     for (int i = 0; i < count; i++)
                     {
-                        var collider = colBuffer[i];
-                        colBuffer[i] = null;
+                        var collider = Vis.colBuffer[i];
+                        Vis.colBuffer[i] = null;
                         var collidingPlayer = collider.GetComponentInParent<BasePlayer>();
                         playersNear[i] = collidingPlayer;
                     }
