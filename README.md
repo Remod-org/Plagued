@@ -65,8 +65,7 @@ It still has to be fine tuned, but the idea is you can still interact with your 
 }
 ```
     - `plagueRange` - This unit is a radius in meters and represents the range of the infection. Every other players that are present inside of this sphere around the player will have their plague level increased and so will the player at the center of the sphere. This value is very import for performance and balance, if you set it too high, people will be able to abuse the plague system more easily by sleeping near people's bases and such. Its also critical for performance, the higher the value, the worse the performance will be.
-	- `plagueIncreaseRate` - 
-	- Every time the plugin ticks, this value will be added to a player's plague level, but only once the player has first reached the level of associate with another player.
+	- `plagueIncreaseRate` - Every time the plugin ticks, this value will be added to a player's plague level, but only once the player has first reached the level of associate with another player.
 	- `plagueDecreaseRate` - Every time the plugin ticks and the player is alone or with kin, this value will be subtracted from his plague level.
 	- `plagueMinAffinity` - The affinity level at which players will start gaining plague levels.
 	- `affinityIncRate` - The rate at which affinity between players increase for every plugin tick.
