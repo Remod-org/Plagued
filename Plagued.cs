@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Oxide.Plugins
 {
-    [Info("Plagued", "Psi|ocybin", "0.3.5", ResourceId = 1991)]
+    [Info("Plagued", "Psi|ocybin", "0.3.6", ResourceId = 1991)]
     [Description("Everyone is infected")]
 
     class Plagued : RustPlugin
@@ -180,7 +180,7 @@ namespace Oxide.Plugins
             metabolism.poison.value = 2;
         }
 
-        void OnPlayerProximity(BasePlayer player, BasePlayer[] players)
+        void OnPlayerProximity(BasePlayer player, List<BasePlayer> players)
         {
             if (playerStates.ContainsKey(player.userID))
             {
@@ -191,10 +191,10 @@ namespace Oxide.Plugins
 
         void OnPlayerAlone(BasePlayer player)
         {
-            //Puts("OnPlayerAlone: "+ player.userID);
             if (playerStates.ContainsKey(player.userID))
             {
                 playerStates[player.userID].decreasePlaguePenalty();
+                //Puts("OnPlayerAlone: "+ player.userID);
             }
         }
 
@@ -650,7 +650,7 @@ namespace Oxide.Plugins
              * Increases the affinity of all the associations in the list and increases the plague penalty if some associations are over the plague threshold
              * It also decreases the plague treshold if all the associates are kin or under the threshold
              */
-            public void increasePlaguePenalty(BasePlayer[] associates)
+            public void increasePlaguePenalty(List<BasePlayer> associates)
             {
                 int contagionVectorsCount = 0;
                 var sql = new Core.Database.Sql();
@@ -1096,13 +1096,15 @@ namespace Oxide.Plugins
 
                 if (count > 1)
                 {
-                    BasePlayer[] playersNear = new BasePlayer[count];
+                    List<BasePlayer> playersNear = new List<BasePlayer>();
                     for (int i = 0; i < count; i++)
                     {
                         var collider = Vis.colBuffer[i];
                         Vis.colBuffer[i] = null;
                         var collidingPlayer = collider.GetComponentInParent<BasePlayer>();
-                        playersNear[i] = collidingPlayer;
+                        if (collidingPlayer is NPCPlayer)
+                            continue;
+                        playersNear.Add(collidingPlayer);
                     }
                     notifyPlayerProximity(playersNear);
                 }
@@ -1112,7 +1114,7 @@ namespace Oxide.Plugins
                 }
             }
 
-            void notifyPlayerProximity(BasePlayer[] players) => Interface.Oxide.CallHook("OnPlayerProximity", player, players);
+            void notifyPlayerProximity(List<BasePlayer> players) => Interface.Oxide.CallHook("OnPlayerProximity", player, players);
 
             void notifyPlayerAlone() => Interface.Oxide.CallHook("OnPlayerAlone", player);
         }
