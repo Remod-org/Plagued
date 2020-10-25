@@ -1,7 +1,7 @@
 # Plagued
 
 <p align="center">
-  <img src="https://i.imgur.com/3JcqsKO.png?1"/>
+  <img src="https://i.imgur.com/vXSbPPq.jpg"/>
 </p>
 
 ## Plagued - Everyone is infected (COVID-19 Edition)
